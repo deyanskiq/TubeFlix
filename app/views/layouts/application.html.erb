@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tubeflix</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  
+  <body>
+    <%= yield %>
+  <% if current_user %>
+  <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+<% end %>
+   <!-- flash messages; ako imam greshka rails pyha v notice -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  </body>
+</html>
