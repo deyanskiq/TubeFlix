@@ -1,0 +1,48 @@
+<p> 
+    <strong>Title: </strong>
+    <%= @upload.name %>
+</p>
+
+<p> 
+    <%= @upload.path %>
+</p>
+
+
+<p> 
+    <strong>User: </strong>
+    <%= @upload.user_id %>
+</p>
+
+<% @upload.comments.each do |comment| %>
+    <p>
+        <strong> Commenter: </strong>
+        <%= comment.user_id %>
+    </p>
+
+    <p>
+        <strong> Comment: </strong>
+        <%= comment.body   %>
+    </p>
+
+    <% end %>
+
+    <h2> Add a Comment: </h2>
+    <%= form_for([@upload, @upload.comments.build]) do |f| %>
+        <p> 
+        <%= f.label :user_id %> <br />
+        <%= f.text_field :user_id %>
+        
+        </p>
+
+        <p> 
+        <%= f.label :body %> <br />
+        <%= f.text_field :body %>
+        
+        </p>
+     
+        <p>
+        <%= f.submit %>
+        </p>
+        <% end %>
+фадсф
+        
