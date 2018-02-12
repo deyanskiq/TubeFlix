@@ -5,5 +5,14 @@
 body{
     background-image: url("back.jpg");
     color: white;
+    a:link {
+        color: rgb(0, 225, 255);
+    }
+    a:visited {
+        color: rgb(158, 60, 60);
+    }
+    a:hover { 
+        color: rgb(152, 236, 222);
 
+    }
 }

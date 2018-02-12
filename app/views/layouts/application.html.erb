@@ -19,9 +19,7 @@
 
   <% if current_user %>
   <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
-  <% else %>
-  <%=  button_to 'Log in or register', new_user_session_path %>
-<% end %>
+  <% end %>
    <!-- flash messages; ako imam greshka rails pyha v notice -->
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
