@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
+  get 'pages/home'
+
+  get 'pages/about'
+
   get 'user/index'
 
+  match ':controller(/:action(/:id))', :via => :get
+
   devise_for :users
-  
-  resources :users
+
+  devise_scope :users do
+    get 'user/new', to: 'user#new', as: 'new_user'
+    get 'user/:id', to: 'user#show' , as: 'user'
+    get 'user', to: 'user#index' 
+  end
+
   resources :uploads do 
     resources :comments
   end
+  resources :uploads , only: [:show, :new, :create, :destroy]
 
-  root 'user#index'
+  root 'pages#home'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

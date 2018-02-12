@@ -1,2 +1,38 @@
-<h1>User#index</h1>
-<p>Find me in app/views/user/index.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+
+
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Reseller Id</th>  
+      <th>Role</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.encrypted_password %></td>
+        <td><%= user.reseller_id %></td>
+        <td><%= user.role %></td>
+      
+        <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>
