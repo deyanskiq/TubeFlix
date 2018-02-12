@@ -27,13 +27,10 @@
   </div>
 
   <div class="field">
-    <%= f.label :autolyse %><br />
-    <%= f.label :autolyse, "Admin", :value => "Admin"  %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
-    <%= f.label :autolyse, "Reseller", :value => "Reseller" %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
-    <%= f.label :autolyse, "User", :value => "User" %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
+  <b>Role</b><br />
+  <%= f.radio_button :role, 'Admin' %> Admin<br />
+  <%= f.radio_button :role, 'Reseller' %> Reseller<br />
+  <%= f.radio_button :role, 'User' %> User<br />
   </div>
 
   <div class="actions">

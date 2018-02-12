@@ -26,6 +26,7 @@
   </div>
 
   <div class="field">
+
     <%= f.label :autolyse, "Admin", :value => "Admin"  %>
     <%= f.radio_button :autolyse, false, :checked => true %>
     <%= f.label :autolyse, "Reseller", :value => "Reseller" %>
@@ -38,8 +39,6 @@
     <%= f.submit "Add user" %>
   </div>
 <% end %>
-
-<br>
 
 <%= link_to("Back",
 {:controller => 'user', 
