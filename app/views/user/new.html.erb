@@ -3,45 +3,45 @@
 <%= form_for :user do |f| %>
 
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
+  <%= f.label :name %><br />
+  <%= f.text_field :name, autofocus: true %>
+</div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email %>
-  </div>
+<div class="field">
+  <%= f.label :email %><br />
+  <%= f.email_field :email %>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<div class="field">
+  <%= f.label :password %>
+  <% if @minimum_password_length %>
+  <em>(<%= @minimum_password_length %> characters minimum)</em>
+  <% end %><br />
+  <%= f.password_field :password, autocomplete: "off" %>
+</div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+<div class="field">
+  <%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+</div>
 
-  <div class="field">
-
-    <%= f.label :autolyse, "Admin", :value => "Admin"  %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
-    <%= f.label :autolyse, "Reseller", :value => "Reseller" %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
-    <%= f.label :autolyse, "User", :value => "User" %>
-    <%= f.radio_button :autolyse, false, :checked => true %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Add user" %>
-  </div>
+<div class="field">
+<b>Role</b><br />
+<% if false %>
+<%= f.radio_button :role, 'Admin' %> Admin<br />
+<%= f.radio_button :role, 'Reseller' %> Reseller<br />
+<%= f.radio_button :role, 'User' %> User<br />
 <% end %>
+<%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+<br>
+</div>
+<br>
 
+<div class="actions">
+  <%= f.submit "Sign up" %>
+</div>
+<% end %>
 <%= link_to("Back",
 {:controller => 'user', 
 :action => 'index'}) %>
-
 

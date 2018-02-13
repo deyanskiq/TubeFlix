@@ -28,13 +28,21 @@
 
   <div class="field">
   <b>Role</b><br />
+  <% if false %>
   <%= f.radio_button :role, 'Admin' %> Admin<br />
   <%= f.radio_button :role, 'Reseller' %> Reseller<br />
   <%= f.radio_button :role, 'User' %> User<br />
+  <% end %>
+  <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+  <br>
   </div>
+  <br>
 
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
 <%= render "devise/shared/links" %>
+<%= link_to("Back",
+{:controller => 'page', 
+:action => 'home'}) %>

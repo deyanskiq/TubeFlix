@@ -2,3 +2,6 @@
 <% if current_user== nil %>
 <%=  button_to 'Log in or register', new_user_session_path %>
 <% end %>
+<% if can? :manage, User %>
+  <%= link_to "View Users", user_index_path %>
+<% end %>
