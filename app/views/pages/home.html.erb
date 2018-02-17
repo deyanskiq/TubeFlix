@@ -1,6 +1,8 @@
 <h1>Pages#home</h1>
 <% if current_user== nil %>
-<%=  button_to 'Log in or register', new_user_session_path %>
+<%=  button_to 'Log in', new_user_session_path %>
+<p>or </p>
+<%=  button_to 'Register', new_user_registration_path, :method => :get %>
 <% end %>
 <% if can? :manage, User %>
   <%= link_to "View Users", user_index_path %>

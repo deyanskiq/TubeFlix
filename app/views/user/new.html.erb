@@ -1,6 +1,6 @@
 <h2>Add user</h2>
 
-<%= form_for :user do |f| %>
+<%= form_for :user, url: users_path do |f| %>
 
   <div class="field">
   <%= f.label :name %><br />
@@ -32,8 +32,11 @@
 <%= f.radio_button :role, 'Reseller' %> Reseller<br />
 <%= f.radio_button :role, 'User' %> User<br />
 <% end %>
+<% if false %>
 <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+<% end %>
 <br>
+
 </div>
 <br>
 
@@ -41,7 +44,5 @@
   <%= f.submit "Sign up" %>
 </div>
 <% end %>
-<%= link_to("Back",
-{:controller => 'user', 
-:action => 'index'}) %>
+<%= link_to 'Back', pages_home_path %>
 

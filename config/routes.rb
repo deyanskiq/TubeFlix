@@ -10,11 +10,15 @@ Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
     get 'sign_in', to: 'devise/sessions#new'
+    get 'sign_up', to: 'devise/registrations#new'
   end
+  
   devise_scope :users do
     get 'user/new', to: 'user#new', as: 'new_user'
     get 'user/:id', to: 'user#show' , as: 'user'
-    get 'user', to: 'user#index' 
+    get 'user', to: 'user#index' , as: 'users'
+    post 'user', to: 'devise/registrations#new'
+
   end
 
   resources :uploads do 

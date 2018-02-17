@@ -9,6 +9,7 @@ class UserController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    puts 'dd'
   end
 
   # GET /users/new
