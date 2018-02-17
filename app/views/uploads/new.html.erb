@@ -1,10 +1,4 @@
-
-<%= video_tag @upload.path.url %>
-<%= video_tag @upload.path.url(:medium) %>
-<%= video_tag @upload.path.url(:thumb) %>
-
-
-<%= form_for @upload, url: uploads_path, html: { multipart: true } do |form| %>
-    <%= form.file_field :path %>
+<%= form_for @upload, url: uploads_path do |form| %>
+    <%= form.file_field :video %>
     <%= form.submit %>
   <% end %>
