@@ -1,0 +1,10 @@
+<%= form_for @upload, url: uploads_path do |form| %>
+    <p> <%= form.file_field :video %></p>
+  <br>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true %>
+  </div>
+  <br>
+    <%= form.submit %>
+  <% end %>

@@ -1,15 +1,35 @@
 class UserController < ApplicationController
   load_and_authorize_resource
+
+  # this is necessery due to devise; without this helper method in any context different from devise resource won't be visible
+  helper_method :resource_name, :resource, :devise_mapping, :resource_class
+
+  def resource_name
+    :user
+  end
+ 
+  def resource
+    @resource ||= User.new
+  end
+
+  def resource_class
+    User
+  end
+ 
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
+
  # GET /users
   # GET /users.json
   def index
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /user/1
+  # GET /user/1.json
   def show
-    puts 'dd'
+    set_user
   end
 
   # GET /users/new
@@ -25,10 +45,11 @@ class UserController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    User.reseller_id = current_user.id
+    
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to users_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -42,7 +63,7 @@ class UserController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -56,7 +77,7 @@ class UserController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to user_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,5 +92,7 @@ class UserController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role )
     end
+
+    
 end
 

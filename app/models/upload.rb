@@ -4,9 +4,8 @@ class Upload < ApplicationRecord
   
   validates :video, presence: true
   has_attached_file :video, :styles => {
-    :medium => { :geometry => "200x200!", :format => 'mp4' },
-    :thumb => { :geometry => "100x100#", :format => 'jpg', :time => 10 }
-}, :processors => [:transcoder]
+    :medium => { :geometry => "640x480#", :format => 'mp4' }, :thumb => ["300x300#", :jpg]},
+    :processors => [:transcoder]
 #:processors => [:ffmpeg]
  # validates :video, attachment_presence: true
  # validates_with AttachmentPresenceValidator, attributes: :video

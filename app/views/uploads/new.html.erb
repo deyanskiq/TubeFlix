@@ -1,4 +1,3 @@
-<%= form_for @upload, url: uploads_path do |form| %>
-    <%= form.file_field :video %>
-    <%= form.submit %>
-  <% end %>
+<p> New Video </p>
+<%= render 'form', upload: @upload %>
+  <%= link_to 'Back', uploads_path %>

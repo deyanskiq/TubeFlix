@@ -8,6 +8,10 @@ class UploadsController < ApplicationController
         @upload = Upload.new
     end
 
+    def show
+      @upload = Upload.find(params[:id])
+    end
+    
     def create
         @upload = Upload.new(upload_params)
 
@@ -41,7 +45,7 @@ class UploadsController < ApplicationController
         end
       end
     end
-    
+
       private
       
       # Use strong_parameters for attribute whitelisting

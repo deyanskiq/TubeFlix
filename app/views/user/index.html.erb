@@ -18,7 +18,7 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr class="<%= cycle('list_line_odd','list_line_even') %>" >
         <td><%= user.id %></td>
         <td><%= user.email %></td>
         <td><%= user.encrypted_password %></td>
@@ -34,5 +34,6 @@
 </table>
 
 <br>
-
+<% if can? :manage, User %>
 <%= link_to 'New User', new_user_path %>
+<% end %>
