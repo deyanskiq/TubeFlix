@@ -3,14 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 table{
     border-collapse: collapse;
+    margin: 0 auto;
+    
 }
 table tr td{
-    padding: 10px, 
+    padding: 10px;
 }
 
 thead{
     text-align: left;
-    background: #00308f;
+    background: #001f5e;
     color: #FFF;
 }
 thead th{
@@ -18,5 +20,12 @@ thead th{
 }
 
 .list_line_even{
-    background: rgb(73, 71, 71);
+    background: #002368;
+}
+h1{
+    margin-left: 40%;
+    
+}
+.user-info{
+    text-align: center;
 }

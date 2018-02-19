@@ -4,16 +4,24 @@
 
 body{
     background-image: url("back.jpg");
-    color: white;
     a:link {
         color: rgb(0, 225, 255);
     }
     a:visited {
-        color: rgb(158, 60, 60);
+        color: rgb(255, 244, 244);
     }
     a:hover { 
         color: rgb(152, 236, 222);
 
     }
-
+.home-img{
+    margin: auto;
+    width: 70%;
+    margin-top: 40px;
+  
+}
+.log-in{
+    float: right;
+    margin-right: 20px
+}
 }

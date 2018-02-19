@@ -10,20 +10,27 @@
 
   
   <body>
+  <div class="logged-in">
   <%  if user_signed_in? %> 
-  <p> Logged in with: <%= current_user.email %> </p>
+  <p><%= current_user.name %> </p>
+  <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
   <% end %>
+  </div>
     <%= yield %>
     
 
 
-  <% if current_user %>
-  <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
-  <% end %>
+ 
    <!-- flash messages; ako imam greshka rails pyha v notice -->
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <hr>
+
+    <div class="footer">
+      <p><i> All rights reserved 2018 | Deyan Denchev </i> </p>
+      <%= link_to 'Home', pages_about_path %>
+      <%= link_to 'About', pages_about_path %>
+      
+    </div>
   </body>
 </html>

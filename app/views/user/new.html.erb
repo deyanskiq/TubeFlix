@@ -4,7 +4,7 @@
 <h2> Add new User</h2>
 <% end %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for @user, url: users_path(@user) do |f| %>
 
   <div class="field">
   <%= f.label :name %><br />
@@ -31,27 +31,24 @@
 
 <div class="field">
 <% if false %>
-<b>Role</b><br />
-<%= f.radio_button :role, 'Admin' %> Admin<br />
-<%= f.radio_button :role, 'Reseller' %> Reseller<br />
-<%= f.radio_button :role, 'User' %> User<br />
-<%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
-
-<br>
-<% if can? :manage, :all %>
+  <b>Role</b><br />
+  <%= f.radio_button :role, 'Admin' %> Admin<br />
   <%= f.radio_button :role, 'Reseller' %> Reseller<br />
-<% else %>
   <%= f.radio_button :role, 'User' %> User<br />
-<% end %>
+  <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+
+  <br>
+  <% if can? :manage, :all %>
+    <%= f.radio_button :role, 'Reseller' %> Reseller<br />
+  <% else %>
+    <%= f.radio_button :role, 'User' %> User<br />
+  <% end %>
 <% end %>
 
 
 </div>
-<br>
 
-<div class="actions">
-  <%= f.submit "Add" %>
-</div>
+
+  <%= f.submit %>
+
 <% end %>
-<%= link_to 'Back', users_path %>
-

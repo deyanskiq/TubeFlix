@@ -1,1 +1,64 @@
-<p></p>
+<p id="notice"><%= notice %></p>
+<h1> User detail information </h1>
+<div class="user-info"> 
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @user.encrypted_password %>
+</p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @user.id %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+
+
+<p>
+  <strong>Reseller id:</strong>
+  <%= @user.reseller_id %>
+</p>
+<p>
+  <strong>Creteated at:</strong>
+  <%= @user.created_at %>
+</p>
+
+<p>
+  <strong>Updated at:</strong>
+  <%= @user.updated_at %>
+</p>
+
+<p>
+  <strong>Sign in count:</strong>
+  <%= @user.sign_in_count %>
+</p>
+
+<p>
+  <strong>Current sign in at:</strong>
+  <%= @user.current_sign_in_at %>
+</p>
+
+<p>
+  <strong>Last sign in at:</strong>
+  <%= @user.last_sign_in_at %>
+</p>
+<p>
+  <strong>Current sign in IP:</strong>
+  <%= @user.current_sign_in_ip %>
+</p>
+<p>
+  <strong>Last sign in IP:</strong>
+  <%= @user.last_sign_in_ip %>
+</p>
+</div>
+
+<%= link_to 'Edit', edit_user_registration_path(@user) %> |
+<%= link_to 'Back', users_path %>

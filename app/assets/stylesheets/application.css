@@ -13,3 +13,33 @@
  *= require_tree .
  *= require_self
  */
+
+body{
+    margin: 0 0;
+    color: #ffffff;
+    
+}
+ .footer{
+    text-align: center;
+     margin:130px 0 0 0;
+     padding:77px 0;
+     background-color: rgb(255, 255, 255);
+ }
+
+ .footer p{
+     margin:0 0;
+     color: #000000;
+ }
+ .footer a{
+    color: #000000;
+ }
+ .footer a:hover{
+    color: #3b3b3b;
+ }
+ .footer a:visited{
+    color: #111010;
+ }
+ .logged-in{
+     text-align: right;
+     margin-right: 10px;
+ }

@@ -29,7 +29,7 @@ class UserController < ApplicationController
   # GET /user/1
   # GET /user/1.json
   def show
-    set_user
+    @user = User.find(params[:id])
   end
 
   # GET /users/new
@@ -45,11 +45,11 @@ class UserController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    User.reseller_id = current_user.id
+    @user.reseller_id = current_user.id
     
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
+        format.html { redirect_to user_index_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }

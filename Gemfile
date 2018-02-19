@@ -61,3 +61,6 @@ gem 'cancancan', '~> 2.1.2'
 gem "paperclip", "~> 5.2.1"
 
 gem 'paperclip-av-transcoder'
+
+gem 'pry-byebug'
+

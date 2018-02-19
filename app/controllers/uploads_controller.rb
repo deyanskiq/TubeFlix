@@ -13,18 +13,17 @@ class UploadsController < ApplicationController
     end
     
     def create
-        @upload = Upload.new(upload_params)
-
-        respond_to do |format|
-            if @upload.save
-              format.html { redirect_to uploads_path, notice: 'Video was successfully uploaded.' }
-              format.json { render :show, status: :created, location: @upload }
-            else
-              format.html { render :edit }
-              format.json { render json: @upload.errors, status: :unprocessable_entity }
-            end
-          end
+      @upload = Upload.new(upload_params)
+      respond_to do |format|
+        if @upload.save
+          format.html { redirect_to uploads_path, notice: 'Video was successfully uploaded.' }
+          format.json { render :show, status: :created, location: @upload }
+        else
+          format.html { render :edit }
+          format.json { render json: @upload.errors, status: :unprocessable_entity }
+        end
       end
+    end
     
     def destroy
         @upload.destroy

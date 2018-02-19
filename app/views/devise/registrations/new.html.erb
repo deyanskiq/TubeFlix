@@ -1,7 +1,7 @@
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<%= devise_error_messages! %>
 
   <div class="field">
     <%= f.label :name %><br />
@@ -43,6 +43,3 @@
   </div>
 <% end %>
 <%= render "devise/shared/links" %>
-<%= link_to("Back",
-{:controller => 'page', 
-:action => 'home'}) %>
