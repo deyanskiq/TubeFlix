@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 
-
+<% if current_user.role == 'Admin' %>
 <h1>Admin Panel</h1>
+<% else %>
+<h1>Reseller Panel</h1>
+<% end %>
 
 <table>
   <thead>
@@ -35,3 +38,5 @@
 <% if can? :manage, User %>
 <%= link_to 'New User', user_new_path %>
 <% end %>
+<br>
+<%= link_to 'Back', uploads_path %>

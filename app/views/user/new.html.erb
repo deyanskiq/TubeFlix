@@ -31,7 +31,7 @@
 
 <div class="field">
 <% if false %>
-  <b>Role</b><br />
+  <b>Role</b> <br />
   <%= f.radio_button :role, 'Admin' %> Admin<br />
   <%= f.radio_button :role, 'Reseller' %> Reseller<br />
   <%= f.radio_button :role, 'User' %> User<br />
@@ -52,3 +52,4 @@
   <%= f.submit %>
 
 <% end %>
+<%= link_to 'Back', user_index_path %>

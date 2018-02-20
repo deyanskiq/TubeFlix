@@ -13,15 +13,15 @@ Rails.application.routes.draw do
   devise_for :users
 
   devise_scope :user do
+    get 'user/:id', to: 'user#show' , as: 'user'
     get 'sign_in', to: 'devise/sessions#new'
     get 'sign_up', to: 'devise/registrations#new'
-    # get 'user/new', to: 'user#new', as: 'new_userr'
-    # get 'user/:id', to: 'user#show' , as: 'user'
+    get 'user/new', to: 'user#new', as: 'new_userr'
   end
   
   devise_scope :users do
-    # get 'user', to: 'user#index' , as: 'users'
-    post 'user', to: 'devise/registrations#new'
+    #get 'user', to: 'user#index' , as: 'users'
+    post 'user', to: 'devise/registrations#new', as: 'create_new_user'
   end
 
   resources :uploads do 
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :uploads , only: [:show, :new, :create, :destroy]
   resources :user , only: [:destroy]
 
-  root 'pages#home'
+  root 'uploads#index'
 
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

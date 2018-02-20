@@ -47,6 +47,11 @@ class UserController < ApplicationController
     @user = User.new(user_params)
     @user.reseller_id = current_user.id
     
+    if current_user.role == 'Admin'
+      @user.role = 'Reseller'
+    else
+      @user.role = 'User'
+    end
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_index_path, notice: 'User was successfully created.' }
@@ -77,7 +82,7 @@ class UserController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to user_index_path, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

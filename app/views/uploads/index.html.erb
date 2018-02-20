@@ -1,19 +1,37 @@
 <p id="notice"><%= notice %></p>
+<% if current_user== nil %>
+<div class= "log-in">
+<%=  button_to 'Log in', new_user_session_path %>
+<br>
+<%=  button_to 'Register', new_user_registration_path, :method => :get %>
+
+
+</div>
+
+<div class="home-img">
+<%= link_to image_tag("2.png"),new_user_session_path  %>
+</div>
+
+<% else %>
+<%= link_to 'New upload', new_upload_path %>
 
 <h1>Video Library</h1>
+<% if can? :manage, User %>
+  <%= link_to "View Users", user_index_path %>
+<% end %>
 
-    <% @uploads.each do |upload| %>
-      <br>
-      <br> 
-      <div class="floating-box">
-      <div class="video-name"> <%= upload.name%> </div>
-        <%= link_to video_tag(upload.video.url(:medium), autobuffer: false, size: "300x200"), upload_path(upload)  %>
-        </div>
-    <% end %>
+<% @uploads.each do |upload| %>
+    <br>
+    <br> 
+    <div class="floating-box">
+    <div class="video-name"> <%= upload.name%> </div>
+      <%= link_to video_tag(upload.video.url(:medium), autobuffer: false, size: "300x200"), upload_path(upload)  %>
+      </div>
+  <% end %>
 
 <br>
 
-<%= link_to 'New upload', new_upload_path %>
+
 <div class="floating-box">Floating box</div>
 <div class="floating-box">Floating box</div>
 <div class="floating-box">Floating box</div>
@@ -22,3 +40,5 @@
 <div class="floating-box">Floating box</div>
 <div class="floating-box">Floating box</div>
 <div class="floating-box">Floating box</div>
+
+<% end %>
