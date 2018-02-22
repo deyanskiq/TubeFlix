@@ -3,5 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :trackable, :validatable
   has_many :uploads
-  ROLES = %i[User Reseller Admin]
+  #ROLES = %i[User Reseller Admin]
+
+
 end

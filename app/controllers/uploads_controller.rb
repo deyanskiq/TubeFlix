@@ -36,8 +36,8 @@ class UploadsController < ApplicationController
 
     def update
       respond_to do |format|
-        if @upload.update(article_params)
-          format.html { redirect_to uploads_path, notice: 'Video was successfully updated.' }
+        if @upload.update(upload_params)
+          format.html { redirect_to @upload, notice: 'Video was successfully updated.' }
           format.json { render :show, status: :ok, location: @upload }
         else
           format.html { render :edit }

@@ -1,5 +1,5 @@
 class Upload < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
   has_many :comments
   
   validates :video, presence: true

@@ -1,0 +1,7 @@
+<%= form_for @comment, url: upload_comment_path(@comment.upload_id, @comment) do |f| %>
+
+  <p>
+    <%= f.text_area :body, size: "111x4" %>
+  </p>
+<%= f.submit %>
+<% end %>

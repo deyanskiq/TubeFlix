@@ -20,6 +20,7 @@ class UserController < ApplicationController
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+
  # GET /users
   # GET /users.json
   def index

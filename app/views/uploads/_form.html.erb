@@ -1,4 +1,4 @@
-<%= form_for @upload, url: uploads_path do |form| %>
+<%= form_for @upload, url: upload_update_path(upload) do |form| %>
     <p> <%= form.file_field :video %></p>
   <br>
   <div class="field">
