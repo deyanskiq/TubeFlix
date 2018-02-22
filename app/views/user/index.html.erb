@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 
 <% if current_user.role == 'Admin' %>
 <h1>Admin Panel</h1>
@@ -29,10 +27,16 @@
         <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
         <td><%= link_to 'Show', user_path(user) %></td>
         <td><%= link_to 'Destroy', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <% if user.role == 'Reseller' %>
+        <td><%= link_to 'Compound Destroy', user_path(user), method: :delete, data: { confirm: 'This will remove Reseller and all his managed Users! Are you sure?' } %></td>
+        <% end %>
+          </tr>
+
     <% end %>
   </tbody>
 </table>
+<p id="notice"><%= notice %></p>
+
 
 <br>
 <% if can? :manage, User %>

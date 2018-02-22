@@ -78,12 +78,27 @@ class UserController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /user/1
+  # DELETE /user/1.json
   def destroy
     @user.destroy
+
     respond_to do |format|
       format.html { redirect_to user_index_path, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def compound_destroy
+    @users = User.where(reseller_id: @user.id)
+    @users.each do |user|
+      user.destroy
+    end
+
+    @user.destroy
+
+    respond_to do |format|
+      format.html { redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.' }
       format.json { head :no_content }
     end
   end

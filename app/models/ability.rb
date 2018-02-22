@@ -23,7 +23,7 @@ class Ability
     elsif reseller(user)
       can :manage, User, :reseller_id => user.id
       # can :manage, Upload do |upload|
-      #   upload.user.reseller_id == user.id
+      #   upload.user.reseller_id == user.id or upload.user_id == user.id
       # end
     else
       can :manage, User, :id => user.id
