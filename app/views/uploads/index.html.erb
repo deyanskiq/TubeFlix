@@ -1,5 +1,5 @@
 <h1>Video Library</h1>
-<% if can? :manage, User %>
+<% if current_user.role != 'User' %>
   <%= link_to "View Users", user_index_path %>
 <% end %>
 <br>
