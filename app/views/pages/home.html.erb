@@ -10,5 +10,7 @@
   </div>
 <% else %>
 <%= link_to 'Library', uploads_path %>
+  <br>
+  <%= link_to 'Edit Profile', edit_user_path(current_user) %>
 
 <% end %>

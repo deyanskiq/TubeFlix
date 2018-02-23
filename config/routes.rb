@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     get 'user/:id', to: 'user#show', as: 'user'
     get 'sign_in', to: 'devise/sessions#new'
     get 'sign_up', to: 'devise/registrations#new'
-    delete 'user/:id', to: 'user#compound_destroy', as: 'compound_destroy'
+    delete 'user/:id/compound', to: 'user#compound_destroy', as: 'compound_destroy'
   end
 
   devise_scope :users do

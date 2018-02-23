@@ -72,8 +72,8 @@ class UserController < ApplicationController
         if @user.id == current_user.id
           format.html {redirect_to new_user_session_path, notice: 'Sign up with the new credentials.'}
         else
-        format.html {redirect_to user_index_path, notice: 'User was successfully updated.'}
-        format.json {render :show, status: :ok, location: @user}
+          format.html {redirect_to user_index_path, notice: 'User was successfully updated.'}
+          format.json {render :show, status: :ok, location: @user}
         end
       else
         format.html {render :edit}
@@ -88,8 +88,13 @@ class UserController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
-      format.json {head :no_content}
+      if @user.id == current_user.id
+        format.html {redirect_to new_user_session_path, notice: 'Profile was successfully destroyed.'}
+
+      else
+        format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
+        format.json {head :no_content}
+      end
     end
   end
 
@@ -102,8 +107,13 @@ class UserController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
-      format.json {head :no_content}
+      if @user.id == current_user.id
+        format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}
+
+      else
+        format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
+        format.json {head :no_content}
+      end
     end
   end
 

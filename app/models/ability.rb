@@ -7,11 +7,16 @@ class Ability
       can :manage, :all if user.role == "Admin"
       can :manage, User, :reseller_id => user.id if user.role == "Reseller"
       can [:manage], [Upload, Comment], :user_id => user.id if user.role == "Reseller"
+      can :manage, User, id: user.id if user.role == "Reseller"
+
       # can :manage, Upload do |upload|
       #   upload.user.reseller_id == user.id
       # end
+      can [:update, :destroy], User if user.role == "User"
+
       if user.present? # additional permissions for logged in users (they can manage their posts)
         can [:manage], [Upload, Comment], user_id: user.id
+
       else
         can :read, Upload
       end
