@@ -66,7 +66,6 @@ class UserController < ApplicationController
 
   # PATCH/PUT /user/1/edit
   def update
-    # binding.pry
     respond_to do |format|
       if @user.update(user_params)
         if @user.id == current_user.id
@@ -105,7 +104,6 @@ class UserController < ApplicationController
     end
 
     @user.destroy
-
     respond_to do |format|
       if @user.id == current_user.id
         format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}

@@ -2,14 +2,13 @@
   <div class="home-img">
     <%= link_to image_tag("2.png"), new_user_session_path %>
   </div>
-
   <div class="log-in">
     <%= button_to 'Log in', new_user_session_path %>
     <br>
     <%= button_to 'Register', new_user_registration_path, :method => :get %>
   </div>
 <% else %>
-<%= link_to 'Library', uploads_path %>
+  <%= link_to 'Library', uploads_path %>
   <br>
   <%= link_to 'Edit Profile', edit_user_path(current_user) %>
 

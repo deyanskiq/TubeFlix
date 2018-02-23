@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Tubeflix</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>Tubeflix</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  
-  <body>
-  <div class="logged-in">
-  <%  if user_signed_in? %> 
-  <p><%= current_user.name %> </p>
-  <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+
+<body>
+<div class="logged-in">
+  <% if user_signed_in? %>
+    <p><%= current_user.name %> </p>
+    <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
   <% end %>
-  </div>
-    <%= yield %>
-    
+</div>
+<%= yield %>
+<p class="alert"><%= alert %></p>
+<div class="footer">
+  <p><i> All rights reserved 2018 | Deyan Denchev </i></p>
+  <%= link_to 'Home', uploads_path %>
+  <%= link_to 'About', pages_about_path %>
 
-
- 
-   <!-- flash messages; ako imam greshka rails pyha v notice -->
-    <p class="alert"><%= alert %></p>
-
-
-    <div class="footer">
-      <p><i> All rights reserved 2018 | Deyan Denchev </i> </p>
-      <%= link_to 'Home', uploads_path %>
-      <%= link_to 'About', pages_about_path %>
-      
-    </div>
-  </body>
+</div>
+</body>
 </html>

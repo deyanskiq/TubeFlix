@@ -1,52 +1,36 @@
-<% if can? :manage, :all %>
-<h2>Add new Reseller</h2>
+<% if current_user.role == 'Admin' %>
+  <h2>Add new Reseller</h2>
 <% else %>
-<h2> Add new User</h2>
+  <h2> Add new User</h2>
 <% end %>
 
 <%= form_for @user, url: users_path(@user) do |f| %>
 
   <div class="field">
-  <%= f.label :name %><br />
-  <%= f.text_field :name, autofocus: true %>
-</div>
+    <%= f.label :name %><br/>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
 
-<div class="field">
-  <%= f.label :email %><br />
-  <%= f.email_field :email %>
-</div>
+  <div class="field">
+    <%= f.label :email %><br/>
+    <%= f.email_field :email %>
+  </div>
 
-<div class="field">
-  <%= f.label :password %>
-  <% if @minimum_password_length %>
-  <em>(<%= @minimum_password_length %> characters minimum)</em>
-  <% end %><br />
-  <%= f.password_field :password, autocomplete: "off" %>
-</div>
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br/>
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
 
-<div class="field">
-  <%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation, autocomplete: "off" %>
-</div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br/>
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
 
-<div class="field">
-<% if false %>
-  <b>Role</b> <br />
-  <%= f.radio_button :role, 'Admin' %> Admin<br />
-  <%= f.radio_button :role, 'Reseller' %> Reseller<br />
-  <%= f.radio_button :role, 'User' %> User<br />
-  <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
-
-  <br>
-  <% if can? :manage, :all %>
-    <%= f.radio_button :role, 'Reseller' %> Reseller<br />
-  <% else %>
-    <%= f.radio_button :role, 'User' %> User<br />
-  <% end %>
-<% end %>
-
-
-</div>
+  <div class="field">
+  </div>
 
 
   <%= f.submit %>

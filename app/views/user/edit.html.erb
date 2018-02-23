@@ -1,13 +1,19 @@
-  <h2>Edit <%= resource_name.to_s.humanize %></h2>
-  <%= form_for @user, url: user_path(@user),  html: { method: :patch } do |f| %>
+<% if @user.role == 'Reseller' %>
+  <h2>Edit Reseller</h2>
+<% elsif @user.role == 'User' %>
+  <h2>Edit User</h2>
+<% else %>
+  <h2>Edit Profile</h2>
+<% end %>
+<%= form_for @user, url: user_path(@user), html: {method: :patch} do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %><br/>
     <%= f.email_field :email, autofocus: true %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br/>
     <%= f.text_field :name %>
   </div>
 
@@ -16,16 +22,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
     <%= f.password_field :password, autocomplete: "off" %>
     <% if @minimum_password_length %>
-      <br />
+      <br/>
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %><br/>
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
@@ -34,5 +40,5 @@
   </div>
 <% end %>
 
-<%= link_to "Back", :back %> |   <%= link_to 'Destroy', user_path(current_user), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to "Back", :back %> |   <%= link_to 'Destroy', user_path(current_user), method: :delete, data: {confirm: 'Are you sure?'} %>
 
