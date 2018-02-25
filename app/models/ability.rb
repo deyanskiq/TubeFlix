@@ -2,21 +2,27 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :manage, :all if user.role == "Admin"
-    can :manage, User, :reseller_id => user.id if user.role == "Reseller"
-    can [:manage], [Upload, Comment], :user_id => user.id if user.role == "Reseller"
-    can :manage, User, id: user.id if user.role == "Reseller"
+    # Admin
+    can :manage, :all if user && user.role == "Admin"
 
+    # Reseller
+    can :manage, User, :reseller_id => user.id if user && user.role == "Reseller"
+    can [:manage], [Upload, Comment], :user_id => user.id if user && user.role == "Reseller"
+
+    can :manage, User, id: user.id if user && user.role == "Reseller"
     # can :manage, Upload do |upload|
     #   upload.user.reseller_id == user.id
     # end
-    can [:update, :destroy], User if user.role == "User"
 
+    # User
+    can [:update, :destroy], User if user && user.role == "User"
+
+    # Logged User
     if user.present? # additional permissions for logged in users
       can [:manage], [Upload, Comment], user_id: user.id
 
-    else
-      can :read, Upload
+    # else
+    #   can :read, Page
     end
 
     #   if admin(user)

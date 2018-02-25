@@ -84,6 +84,14 @@ class UserController < ApplicationController
   # DELETE /user/1
   # DELETE /user/1.json
   def destroy
+    binding.pry
+    if @user.role == 'Reseller'
+      @users = User.where(reseller_id: @user.id)
+      @admin_id = User.find_by(role: 'Admin').id
+      @users.each do |user|
+        user.update_attribute(:reseller_id, @admin_id)
+      end
+    end
     @user.destroy
 
     respond_to do |format|
@@ -123,7 +131,7 @@ class UserController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :reseller_id)
   end
 
 

@@ -60,7 +60,12 @@ gem 'cancancan', '~> 2.1.2'
 
 gem "paperclip", "~> 5.2.1"
 
+gem "delayed_paperclip"
+
+gem 'delayed_job_active_record'
+
 gem 'paperclip-av-transcoder'
 
 gem 'pry-byebug'
 
+gem 'rspec-rails' 

@@ -16,10 +16,17 @@
     <%= f.label :name %><br/>
     <%= f.text_field :name %>
   </div>
+  <div class="field">
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+    <%= f.label :reseller_id %><br/>
+    <%= f.number_field :reseller_id %>
+
+  </div>
+  <!--
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>-->
+    <!--<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>-->
+    <!--
+  <% end %>-->
 
   <div class="field">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
