@@ -1,7 +1,17 @@
 class UploadsController < ApplicationController
   load_and_authorize_resource
+  skip_load_resource :only => :index
 
   def index
+    if current_user.role == 'Admin'
+      @uploads = Upload.scope_admin
+    elsif current_user.role == 'Reseller'
+      @uploads = Upload.scope_reseller(current_user)
+    else
+      @uploads = Upload.scope_user(current_user)
+    end
+
+    @uploads ||= []
   end
 
   def new
@@ -18,7 +28,7 @@ class UploadsController < ApplicationController
 
 
     respond_to do |format|
-      if @upload.save
+      if @upload.save!
         format.html {redirect_to uploads_path, notice: 'Video was successfully uploaded.'}
         format.json {render :show, status: :created, location: @upload}
       else

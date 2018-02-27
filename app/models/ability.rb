@@ -3,48 +3,66 @@ class Ability
 
   def initialize(user)
     # Admin
-    can :manage, :all if user && user.role == "Admin"
+    if user && user.role == 'Admin'
+      can :manage, :all
 
-    # Reseller
-    can :manage, User, :reseller_id => user.id if user && user.role == "Reseller"
-    can [:manage], [Upload, Comment], :user_id => user.id if user && user.role == "Reseller"
+      # Reseller
+      # can :manage, User, :reseller_id => user.id if user && user.role == "Reseller"
+      # can [:manage], [Upload, Comment], :user_id => user.id if user && user.role == "Reseller"
+      #
+      # can :manage, User, id: user.id if user && user.role == "Reseller"
+      #
+      # binding.pry
+    elsif user && user.role == 'Reseller'
+      # binding.pry
+      can :manage, User, :reseller_id => user.id
+      can :manage, User, id: user.id
+      can [:manage], [Upload, Comment], :user_id => user.id
 
-    can :manage, User, id: user.id if user && user.role == "Reseller"
-    # can :manage, Upload do |upload|
-    #   upload.user.reseller_id == user.id
-    # end
+      can :manage, Upload do |upload|
+        upload.user.reseller_id == user.id
+      end
 
-    # User
-    can [:update, :destroy], User if user && user.role == "User"
 
-    # Logged User
-    if user.present? # additional permissions for logged in users
+      # User
+      # can [:update, :destroy], User if user && user.role == "User"
+    elsif user
+      # binding.pry
+      can [:update, :destroy], User, id: user.id
       can [:manage], [Upload, Comment], user_id: user.id
-
-    # else
-    #   can :read, Page
+      can :show, Upload do |upload|
+        upload.user.id == user.reseller_id || upload.user.reseller_id == user.reseller_id
+      end
     end
-
-    #   if admin(user)
-    #     can :manage, :all
-    #   elsif reseller(user)
-    #     can :manage, User, :reseller_id => user.id
-    #     # can :manage, Upload do |upload|
-    #     #   upload.user.reseller_id == user.id or upload.user_id == user.id
-    #     # end
-    #   else
-    #     can :manage, User, :id => user.id
-    #   end
-    #   can :manage, Upload, :user_id => user.id
-    # end
-    #
-    # def admin(user)
-    #   user.role == 'Admin'
-    # end
-    #
-    # def reseller(user)
-    #   user.role == 'Reseller'
-    # end
-
   end
+
+  # Logged User
+  # elsif user.present? # additional permissions for logged in users
+  #   can [:manage], [Upload, Comment], user_id: user.id
+
+  # else
+  #   can :read, Page
+
+
+  #   if admin(user)
+  #     can :manage, :all
+  #   elsif reseller(user)
+  #     can :manage, User, :reseller_id => user.id
+  #     # can :manage, Upload do |upload|
+  #     #   upload.user.reseller_id == user.id or upload.user_id == user.id
+  #     # end
+  #   else
+  #     can :manage, User, :id => user.id
+  #   end
+  #   can :manage, Upload, :user_id => user.id
+  # end
+  #
+  # def admin(user)
+  #   user.role == 'Admin'
+  # end
+  #
+  # def reseller(user)
+  #   user.role == 'Reseller'
+  # end
+
 end

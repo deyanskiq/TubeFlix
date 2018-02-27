@@ -3,13 +3,15 @@ class Upload < ApplicationRecord
   belongs_to :user
   has_many :comments
 
-  # before_validation(on: [:create, :save]) do
-  #   if self.video_processing
-  #     Delayed::Worker.new.run(Delayed::Job.last)
-  #   end
-  #   end
+  before_validation(on: [:create, :save]) do
+    if self.video_processing
+      Delayed::Worker.new.run(Delayed::Job.last)
+    end
+  end
 
-  validates :video, presence: true
+  validates :video, attachment_presence: true
+  validates :name, presence: true, uniqueness: true, length: {minimum: 2}
+
   has_attached_file :video, :styles => {
       :medium => {:geometry => "640x480#", :format => 'mp4'}, :thumb => ["300x300#", :jpg]},
                     :processors => [:transcoder],
@@ -44,17 +46,24 @@ class Upload < ApplicationRecord
   validates_attachment_content_type :video, :content_type => ["video/mp4", "video/quicktime", "video/x-flv", "video/x-msvideo", "video/x-ms-wmv", "video/webm"]
   process_in_background :video
 
-  # validates :video, attachment_presence: true
-  # validates_with AttachmentPresenceValidator, attributes: :video
-  # validates_with AttachmentSizeValidator, attributes: :video, less_than: 800.megabytes
 
-  # Validate content type
-  #validates_attachment_content_type :video, content_type: /\video/
   # Validate filename
   #validates_attachment_file_name :video, matches: [/flv\z/, /mp4?g\z/]
-  #
-  #
+
   # Explicitly do not validate
   # do_not_validate_attachment_file_type :video
+  
+  def self.scope_admin
+    all
+  end
+
+  def self.scope_reseller(reseller)
+    where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
+  end
+
+  def self.scope_user(user)
+    reseller = User.find_by(id: user.reseller_id)
+    where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
+  end
 
 end

@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     @comment.upload_id = upload_id
     @comment.user_id = current_user.id
 
-    @comment.save
+    @comment.save!
     redirect_to upload_path(upload_id)
 
   end

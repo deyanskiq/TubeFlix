@@ -5,6 +5,7 @@
 <% else %>
   <h2>Edit Profile</h2>
 <% end %>
+
 <%= form_for @user, url: user_path(@user), html: {method: :patch} do |f| %>
   <%= devise_error_messages! %>
 
@@ -17,34 +18,42 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-
     <%= f.label :reseller_id %><br/>
     <%= f.number_field :reseller_id %>
 
-  </div>
-  <!--
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>-->
-    <!--<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>-->
+    <% if false %>
+      <% if @user.role == 'User' %>
+        <%= f.label :reseller_id %><br/>
+        <%= f.collection_select(:reseller_id, User.where(role: "Reseller"), :reseller_id, lambda {|i| i.id}) %>
+      <% elsif @user.role == 'Reseller' %>
+        <%= f.collection_select(:reseller_id, User.where(role: "Admin"), :reseller_id, lambda {|i| i.id}) %>
+        </div>
+      <% end %>
+    <% end %>
+
     <!--
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>-->
+      <!--<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>-->
+      <!--
   <% end %>-->
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br/>
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+    <div class="field">
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
+      <%= f.password_field :password, autocomplete: "off" %>
+      <% if @minimum_password_length %>
+        <br/>
+        <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br/>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <div class="field">
+      <%= f.label :password_confirmation %><br/>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
+    <div class="actions">
+      <%= f.submit "Update" %>
+    </div>
 <% end %>
 
 <%= link_to "Back", :back %> |   <%= link_to 'Destroy', user_path(current_user), method: :delete, data: {confirm: 'Are you sure?'} %>

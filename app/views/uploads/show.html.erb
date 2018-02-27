@@ -8,7 +8,7 @@
   <% @upload.comments.each do |comment| %>
     <p>
 
-      <%= User.find(comment.user_id).name + ":" %>
+      <%= User.find(comment.user_id).name %> | <%= comment.updated_at %>
     </p>
 
     <p>

@@ -54,7 +54,7 @@ class UserController < ApplicationController
       @user.role = 'User'
     end
     respond_to do |format|
-      if @user.save
+      if @user.save!
         format.html {redirect_to user_index_path, notice: 'User was successfully created.'}
         format.json {render :show, status: :created, location: @user}
       else
@@ -84,12 +84,11 @@ class UserController < ApplicationController
   # DELETE /user/1
   # DELETE /user/1.json
   def destroy
-    binding.pry
     if @user.role == 'Reseller'
-      @users = User.where(reseller_id: @user.id)
-      @admin_id = User.find_by(role: 'Admin').id
+      @users = User.get_users_by_reseller(@user)
       @users.each do |user|
-        user.update_attribute(:reseller_id, @admin_id)
+        user.reseller_id = -1
+        user.save
       end
     end
     @user.destroy
@@ -106,7 +105,7 @@ class UserController < ApplicationController
   end
 
   def compound_destroy
-    @users = User.where(reseller_id: @user.id)
+    @users = User.get_users_by_reseller(@user)
     @users.each do |user|
       user.destroy
     end
