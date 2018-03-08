@@ -46,7 +46,7 @@ class UserController < ApplicationController
   # POST /user.json
   def create
     @user = User.new(user_params)
-    @user.reseller_id = current_user.id
+    @user.owner_id = current_user.id
 
     if current_user.role == 'Admin'
       @user.role = 'Reseller'
@@ -85,9 +85,9 @@ class UserController < ApplicationController
   # DELETE /user/1.json
   def destroy
     if @user.role == 'Reseller'
-      @users = User.get_users_by_reseller(@user)
+      @users = User.get_users_by_reseller(user)
       @users.each do |user|
-        user.reseller_id = -1
+        user.owner_id = -1
         user.save
       end
     end
@@ -130,7 +130,7 @@ class UserController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :reseller_id)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :owner_id)
   end
 
 

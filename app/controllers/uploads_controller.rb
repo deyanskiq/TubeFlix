@@ -4,7 +4,8 @@ class UploadsController < ApplicationController
 
   def index
     if current_user.role == 'Admin'
-      @uploads = Upload.scope_admin
+      @uploads = Upload.admin_all
+      # @uploads = @uploads.sort { |a,b| a.name <=> b.name }
     elsif current_user.role == 'Reseller'
       @uploads = Upload.scope_reseller(current_user)
     else
@@ -20,7 +21,9 @@ class UploadsController < ApplicationController
 
   def show
     @upload = Upload.find(params[:id])
+    Upload.increment_counter(:hit_counter, @upload.id)
   end
+
 
   def create
     @upload = Upload.new(upload_params)
@@ -60,10 +63,11 @@ class UploadsController < ApplicationController
 
   private
 
-  # Use strong_parameters for attribute whitelisting
-  # Be sure to update your create() and update() controller methods.
+# Use strong_parameters for attribute whitelisting
+# Be sure to update your create() and update() controller methods.
 
   def upload_params
     params.require(:upload).permit(:video, :name)
   end
+
 end

@@ -18,15 +18,15 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :reseller_id %><br/>
-    <%= f.number_field :reseller_id %>
+    <%= f.label :owner_id %><br/>
+    <%= f.number_field :owner_id %>
 
     <% if false %>
       <% if @user.role == 'User' %>
-        <%= f.label :reseller_id %><br/>
-        <%= f.collection_select(:reseller_id, User.where(role: "Reseller"), :reseller_id, lambda {|i| i.id}) %>
+        <%= f.label :owner_id %><br/>
+        <%= f.collection_select(:owner_id, User.where(role: "Reseller"), :owner_id, lambda {|i| i.id}) %>
       <% elsif @user.role == 'Reseller' %>
-        <%= f.collection_select(:reseller_id, User.where(role: "Admin"), :reseller_id, lambda {|i| i.id}) %>
+        <%= f.collection_select(:owner_id, User.where(role: "Admin"), :owner_id, lambda {|i| i.id}) %>
         </div>
       <% end %>
     <% end %>

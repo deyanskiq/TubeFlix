@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180225221553) do
+ActiveRecord::Schema.define(version: 20180308155130) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20180225221553) do
 
   create_table "uploads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
-    t.string "path"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,6 +45,7 @@ ActiveRecord::Schema.define(version: 20180225221553) do
     t.integer "video_file_size"
     t.datetime "video_updated_at"
     t.boolean "video_processing"
+    t.bigint "hit_counter"
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
@@ -63,15 +63,8 @@ ActiveRecord::Schema.define(version: 20180225221553) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-    t.bigint "reseller_id"
     t.string "role"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.integer "failed_attempts", default: 0
-    t.string "unlock_token"
-    t.datetime "locked_at"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.bigint "owner_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

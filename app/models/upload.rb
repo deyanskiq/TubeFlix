@@ -52,18 +52,18 @@ class Upload < ApplicationRecord
 
   # Explicitly do not validate
   # do_not_validate_attachment_file_type :video
-  
-  def self.scope_admin
-    all
-  end
+
+  scope :admin_all, -> {}
 
   def self.scope_reseller(reseller)
     where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
   end
 
   def self.scope_user(user)
-    reseller = User.find_by(id: user.reseller_id)
+    reseller = User.find_by(id: user.owner_id)
     where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
   end
+
+  # scope :sorted_by_name, -> {order(:created_at, :incr)}
 
 end

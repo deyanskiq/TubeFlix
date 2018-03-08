@@ -6,15 +6,26 @@
 
 <%= link_to 'New upload', new_upload_path %>
 <br>
+<%= collection_select(:post, :user_id, User.all,
+                      :id, :name,
+                      {:prompt => 'Filter by'}) %>
+
+<br>
 <% @uploads.each do |upload| %>
 
   <div class="floating-box">
-    <div class="video-name"> <%= upload.name %> </div>
     <% if false %>
       <%= link_to video_tag(upload.video.url(:medium), autobuffer: false, size: "300x200"), upload_path(upload) %>
 
     <% end %>
-    <%= link_to image_tag(upload.video.url(:thumb), size: "300x180"), upload_path(upload) %>
+    <%= link_to image_tag(upload.video.url(:thumb), size: "200x180"), upload_path(upload) %>
+    <div class="video-name">
+     <b> <%= upload.name %> </b><br>
+      <%= upload.user.name %> <br>
+      <%= upload.hit_counter %> Views <br>
+      <%= upload.created_at.strftime("%m/%d/%Y") %>
+    </div>
+
 
   </div>
 <% end %>
