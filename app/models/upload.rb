@@ -1,7 +1,7 @@
 class Upload < ApplicationRecord
 
   belongs_to :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   before_validation(on: [:create, :save]) do
     if self.video_processing
@@ -13,22 +13,22 @@ class Upload < ApplicationRecord
   validates :name, presence: true, uniqueness: true, length: {minimum: 2}
 
   has_attached_file :video, :styles => {
-      :medium => {:geometry => "640x480#", :format => 'mp4'}, :thumb => ["300x300#", :jpg]},
+      :medium => {:geometry => '640x480#', :format => 'mp4'}, :thumb => ['300x300#', :jpg]},
                     :processors => [:transcoder],
                     :preview => {
                         :format => :jpg,
-                        :geometry => "1200x675#",
+                        :geometry => '1200x675#',
                         :convert_options => {
                             :output => {
                                 :vframes => 1,
-                                :s => "1200x675",
+                                :s => '1200x675',
                                 :ss => '00:00:02'
                             }
                         }
                     },
                     :thumb => {
                         :format => :jpg,
-                        :geometry => "300x169#",
+                        :geometry => '300x169#',
                         :convert_options => {
                             :output => {
                                 :vframes => 1,
@@ -43,7 +43,7 @@ class Upload < ApplicationRecord
   # explicitly add validation options and explicitly do not validate
   #
   validates_attachment_size :video, less_than: 1.gigabytes
-  validates_attachment_content_type :video, :content_type => ["video/mp4", "video/quicktime", "video/x-flv", "video/x-msvideo", "video/x-ms-wmv", "video/webm"]
+  validates_attachment_content_type :video, :content_type => ['video/mp4', 'video/quicktime', 'video/x-flv', 'video/x-msvideo', 'video/x-ms-wmv', 'video/webm']
   process_in_background :video
 
 
@@ -53,17 +53,26 @@ class Upload < ApplicationRecord
   # Explicitly do not validate
   # do_not_validate_attachment_file_type :video
 
-  scope :admin_all, -> {}
+  scope :visible_by, ->(current_user) {
+    if current_user.role == 'Reseller'
+      where(user_id: current_user.subordinates.map(&:id).push(current_user.id))
+    elsif current_user.role == 'User'
+      reseller = User.find_by(id: current_user.owner_id)
+      where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
+    end
+  }
 
-  def self.scope_reseller(reseller)
-    where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
-  end
-
-  def self.scope_user(user)
-    reseller = User.find_by(id: user.owner_id)
-    where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
-  end
-
-  # scope :sorted_by_name, -> {order(:created_at, :incr)}
-
+  scope :custom_sort, ->(attribute) {
+    if attribute == 'name'
+      order(:name)
+    elsif attribute == 'views'
+      order(hit_counter: :desc)
+    elsif attribute == 'user'
+      Upload.joins(:user).order('users.name')
+    elsif attribute == 'newest'
+      order(created_at: :desc)
+    else
+      order(:created_at)
+    end
+  }
 end

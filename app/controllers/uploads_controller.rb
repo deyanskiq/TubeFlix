@@ -3,15 +3,7 @@ class UploadsController < ApplicationController
   skip_load_resource :only => :index
 
   def index
-    if current_user.role == 'Admin'
-      @uploads = Upload.admin_all
-      # @uploads = @uploads.sort { |a,b| a.name <=> b.name }
-    elsif current_user.role == 'Reseller'
-      @uploads = Upload.scope_reseller(current_user)
-    else
-      @uploads = Upload.scope_user(current_user)
-    end
-
+    @uploads = Upload.visible_by(current_user).custom_sort(params[:query])
     @uploads ||= []
   end
 

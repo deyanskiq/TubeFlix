@@ -3,13 +3,26 @@
   <%= link_to "View Users", user_index_path %>
 <% end %>
 <br>
-
 <%= link_to 'New upload', new_upload_path %>
-<br>
-<%= collection_select(:post, :user_id, User.all,
-                      :id, :name,
-                      {:prompt => 'Filter by'}) %>
 
+<br>
+<br>
+<% if @uploads.any? %>
+  <p> Sort by: <%= link_to "Name", :controller => "uploads", :action => "index", :query => "name" %> |
+    <%= link_to "User", :controller => "uploads", :action => "index", :query => "user" %> |
+    <%= link_to "Views", :controller => "uploads", :action => "index", :query => "views" %> |
+    <%= link_to "Date: Newest first", :controller => "uploads", :action => "index", :query => "newest" %> |
+    <%= link_to "Date: Oldest first", :controller => "uploads", :action => "index", :query => "oldest" %>
+    <br></p>
+<% end %>
+
+<br>
+<% if false %>
+  <%= collection_select(:post, :user_id, User.all,
+                        :id, :name,
+                        {:prompt => 'Filter by'}) %>
+
+<% end %>
 <br>
 <% @uploads.each do |upload| %>
 
@@ -20,7 +33,7 @@
     <% end %>
     <%= link_to image_tag(upload.video.url(:thumb), size: "200x180"), upload_path(upload) %>
     <div class="video-name">
-     <b> <%= upload.name %> </b><br>
+      <b> <%= upload.name %> </b><br>
       <%= upload.user.name %> <br>
       <%= upload.hit_counter %> Views <br>
       <%= upload.created_at.strftime("%m/%d/%Y") %>

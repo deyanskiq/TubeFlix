@@ -85,54 +85,45 @@ class UserController < ApplicationController
   # DELETE /user/1.json
   def destroy
     if @user.role == 'Reseller'
-      @users = User.get_users_by_reseller(user)
-      @users.each do |user|
-        user.owner_id = -1
-        user.save
-      end
-    end
-    @user.destroy
-
-    respond_to do |format|
-      if @user.id == current_user.id
-        format.html {redirect_to new_user_session_path, notice: 'Profile was successfully destroyed.'}
-
-      else
-        format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
-        format.json {head :no_content}
-      end
-    end
-  end
-
-  def compound_destroy
-    @users = User.get_users_by_reseller(@user)
-    @users.each do |user|
-      user.destroy
+      User.get_users_by_reseller(@user).each {|user| user.update_attribute(:owner_id, -1)}
     end
 
-    @user.destroy
-    respond_to do |format|
-      if @user.id == current_user.id
-        format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}
+  @user.destroy
 
-      else
-        format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
-        format.json {head :no_content}
-      end
+  respond_to do |format|
+    if @user.id == current_user.id
+      format.html {redirect_to new_user_session_path, notice: 'Profile was successfully destroyed.'}
+
+    else
+      format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
-
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :owner_id)
-  end
-
-
 end
 
+def compound_destroy
+  # user.uploads.each(&:destroy)
+  @user.destroy
+
+  respond_to do |format|
+    if @user.id == current_user.id
+      format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}
+
+    else
+      format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
+      format.json {head :no_content}
+    end
+  end
+end
+
+private
+# Use callbacks to share common setup or constraints between actions.
+def set_user
+  @user = User.find(params[:id])
+end
+
+# Never trust parameters from the scary internet, only allow the white list through.
+def user_params
+  params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :owner_id)
+end
+end
