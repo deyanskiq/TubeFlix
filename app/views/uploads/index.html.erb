@@ -1,6 +1,6 @@
 <h1>Video Library</h1>
 <% if current_user.role != 'User' %>
-  <%= link_to "View Users", user_index_path %>
+  <%= link_to 'View Users', user_index_path %>
 <% end %>
 <br>
 <%= link_to 'New upload', new_upload_path %>
@@ -8,35 +8,45 @@
 <br>
 <br>
 <% if @uploads.any? %>
-  <p> Sort by: <%= link_to "Name", :controller => "uploads", :action => "index", :query => "name" %> |
-    <%= link_to "User", :controller => "uploads", :action => "index", :query => "user" %> |
-    <%= link_to "Views", :controller => "uploads", :action => "index", :query => "views" %> |
-    <%= link_to "Date: Newest first", :controller => "uploads", :action => "index", :query => "newest" %> |
-    <%= link_to "Date: Oldest first", :controller => "uploads", :action => "index", :query => "oldest" %>
+  <p> Sort by: <%= link_to 'Name', :controller => 'uploads', :action => 'index', :query => 'name' %> |
+    <%= link_to 'User', :controller => 'uploads', :action => 'index', :query => 'user' %> |
+    <%= link_to 'Views', :controller => 'uploads', :action => 'index', :query => 'views' %> |
+    <%= link_to 'Date: Newest first', :controller => 'uploads', :action => 'index', :query => 'newest' %> |
+    <%= link_to 'Date: Oldest first', :controller => 'uploads', :action => 'index', :query => 'oldest' %>
     <br></p>
+
+  <%= collection_select(:name, :user_id, Upload.joins(:user).visible_by(current_user),
+                        :id,'user_id',
+                        {:prompt => 'Filter by'}) %>
+
+  <%= link_to 'Filter', :controller => 'uploads', :action => 'index', :query => 'filter_by_user' %>
+
+<% if false %>
+  <%= form_for @comment, url: upload_path(@comment.upload_id, @comment) do |f| %>
+    <%= f.collection_select(:name, :user_id, Upload.joins(:user).visible_by(current_user),
+                          :id,'user_id',
+                          {:prompt => 'Filter by'}) %>
+    <%= f.submit %>
+<% end %>
+  <% end %>
 <% end %>
 
 <br>
-<% if false %>
-  <%= collection_select(:post, :user_id, User.all,
-                        :id, :name,
-                        {:prompt => 'Filter by'}) %>
 
-<% end %>
 <br>
 <% @uploads.each do |upload| %>
 
-  <div class="floating-box">
+  <div class='floating-box'>
     <% if false %>
-      <%= link_to video_tag(upload.video.url(:medium), autobuffer: false, size: "300x200"), upload_path(upload) %>
+      <%= link_to video_tag(upload.video.url(:medium), autobuffer: false, size: '300x200'), upload_path(upload) %>
 
     <% end %>
-    <%= link_to image_tag(upload.video.url(:thumb), size: "200x180"), upload_path(upload) %>
-    <div class="video-name">
+    <%= link_to image_tag(upload.video.url(:thumb), size: '200x180'), upload_path(upload) %>
+    <div class='video-name'>
       <b> <%= upload.name %> </b><br>
-      <%= upload.user.name %> <br>
+      <%= upload.user_name %> <br>
       <%= upload.hit_counter %> Views <br>
-      <%= upload.created_at.strftime("%m/%d/%Y") %>
+      <%= upload.created_at.strftime('%m/%d/%Y') %>
     </div>
 
 

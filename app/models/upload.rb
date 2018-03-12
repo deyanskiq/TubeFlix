@@ -3,6 +3,10 @@ class Upload < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
 
+  # Unless we do not use delegate option we access name of the upload owner this way: upload.user.name
+  # This exposes the user object even if we don't really need it, so we could do the following:
+  delegate :name, to: :user, prefix: true
+
   before_validation(on: [:create, :save]) do
     if self.video_processing
       Delayed::Worker.new.run(Delayed::Job.last)
@@ -74,5 +78,9 @@ class Upload < ApplicationRecord
     else
       order(:created_at)
     end
+  }
+
+  scope :filter_by_user, ->(filter_user) {
+    where(user_id: filter_user)
   }
 end

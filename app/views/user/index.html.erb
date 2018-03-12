@@ -1,8 +1,4 @@
-<% if current_user.role == 'Admin' %>
-  <h1>Admin Panel</h1>
-<% else %>
-  <h1>Reseller Panel</h1>
-<% end %>
+<h1> <%= current_user.role %> Panel</h1>
 
 <table>
   <thead>
@@ -20,7 +16,7 @@
   <% @users.each do |user| %>
     <!--<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">-->
     <tr>
-      <% if current_user.role == 'Admin' || current_user.id == user.owner_id  || current_user.id == user.id %>
+      <% if current_user.role == 'Admin' || current_user.id == user.owner_id || current_user.id == user.id %>
         <td><%= user.id %></td>
         <td><%= user.email %></td>
         <td><%= user.name %></td>
@@ -32,10 +28,10 @@
         <td><%= link_to 'Destroy', user_path(user), method: :delete, data: {confirm: 'Are you sure?'} %></td>
 
 
-      <% if user.role == 'Reseller' %>
-        <td><%= link_to 'Compound Destroy', compound_destroy_path(user), method: :delete, data: {confirm: 'This will remove Reseller and all his managed Users! Are you sure?'} %></td>
-      <% end %>
-    </tr>
+        <% if user.role == 'Reseller' %>
+          <td><%= link_to 'Compound Destroy', compound_destroy_path(user), method: :delete, data: {confirm: 'This will remove Reseller and all his managed Users! Are you sure?'} %></td>
+        <% end %>
+        </tr>
       <% end %>
   <% end %>
   </tbody>

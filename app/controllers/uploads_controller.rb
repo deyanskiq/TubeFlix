@@ -4,6 +4,9 @@ class UploadsController < ApplicationController
 
   def index
     @uploads = Upload.visible_by(current_user).custom_sort(params[:query])
+    if params[:query] == 'filter_by_user'
+      Upload.visible_by(current_user).filter_by_user(42)
+    end
     @uploads ||= []
   end
 

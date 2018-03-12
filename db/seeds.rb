@@ -17,7 +17,3 @@ User.create(id: 5, name: 'test4', email: 'test4@abv.bg', password: '123123', rol
 User.create(id: 6, name: 'test5', email: 'test5@abv.bg', password: '123123', role: 'Reseller', owner_id: 2, created_at: '2018-02-22 12:02:55', updated_at: '2018-03-11 13:39:21')
 User.create(id: 7, name: 'test6', email: 'test6@abv.bg', password: '123123', role: 'User', owner_id: 6, created_at: '2018-02-22 12:02:55', updated_at: '2018-03-11 13:39:21')
 User.create(id: 8, name: 'test7', email: 'test7@abv.bg', password: '123123', role: 'User', owner_id: 6, created_at: '2018-02-22 12:02:55', updated_at: '2018-03-11 13:39:21')
-
-#<User id: 41, email: "test@abv.bg",
-# created_at: "2018-02-22 12:02:55",
-# updated_at: "2018-03-11 13:39:21", name: "Admin4", role: "Admin", owner_id: 0>
