@@ -14,21 +14,18 @@
     <%= link_to 'Date: Newest first', :controller => 'uploads', :action => 'index', :query => 'newest' %> |
     <%= link_to 'Date: Oldest first', :controller => 'uploads', :action => 'index', :query => 'oldest' %>
     <br></p>
-
-  <%= collection_select(:name, :user_id, Upload.joins(:user).visible_by(current_user),
-                        :id,'user_id',
-                        {:prompt => 'Filter by'}) %>
-
-  <%= link_to 'Filter', :controller => 'uploads', :action => 'index', :query => 'filter_by_user' %>
-
 <% if false %>
-  <%= form_for @comment, url: upload_path(@comment.upload_id, @comment) do |f| %>
-    <%= f.collection_select(:name, :user_id, Upload.joins(:user).visible_by(current_user),
-                          :id,'user_id',
-                          {:prompt => 'Filter by'}) %>
+  <%= form_for @uploads, url: uploads_path do |f| %>
+
+    <%= f.collection_select(:user_id, Upload.joins(:user).visible_by(current_user),
+                            :id, :user_name,
+                            {:prompt => 'Filter by'}) %>
+
+    <%= link_to 'Filter', :controller => 'uploads', :action => 'index', :query => 'filter_by_user' %>
+
     <%= f.submit %>
-<% end %>
   <% end %>
+<% end %>
 <% end %>
 
 <br>

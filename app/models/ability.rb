@@ -12,9 +12,7 @@ class Ability
       #
       # can :manage, User, id: user.id if user && user.role == "Reseller"
       #
-      # binding.pry
     elsif user && user.role == 'Reseller'
-      # binding.pry
       can :manage, User, :owner_id => user.id
       can :manage, User, id: user.id
       can [:manage], [Upload, Comment], :user_id => user.id
@@ -27,7 +25,6 @@ class Ability
       # User
       # can [:update, :destroy], User if user && user.role == "User"
     elsif user
-      # binding.pry
       can [:update, :destroy], User, id: user.id
       can [:manage], [Upload, Comment], user_id: user.id
       can :show, Upload do |upload|

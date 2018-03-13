@@ -85,45 +85,47 @@ class UserController < ApplicationController
   # DELETE /user/1.json
   def destroy
     if @user.role == 'Reseller'
+      # why @user.subordinates.each {|user| user.update_attribute(:owner_id, -1)} doesn't work; delete both reseller and user
       User.get_users_by_reseller(@user).each {|user| user.update_attribute(:owner_id, -1)}
     end
 
-  @user.destroy
+    @user.destroy
 
-  respond_to do |format|
-    if @user.id == current_user.id
-      format.html {redirect_to new_user_session_path, notice: 'Profile was successfully destroyed.'}
+    respond_to do |format|
+      if @user.id == current_user.id
+        format.html {redirect_to new_user_session_path, notice: 'Profile was successfully destroyed.'}
 
-    else
-      format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
-      format.json {head :no_content}
+      else
+        format.html {redirect_to user_index_path, notice: 'User was successfully destroyed.'}
+        format.json {head :no_content}
+      end
     end
   end
-end
 
-def compound_destroy
-  # user.uploads.each(&:destroy)
-  @user.destroy
+  def compound_destroy
+    # user.uploads.each(&:destroy)
+    binding.pry
+    @user.destroy
 
-  respond_to do |format|
-    if @user.id == current_user.id
-      format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}
+    respond_to do |format|
+      if @user.id == current_user.id
+        format.html {redirect_to new_user_session_path, notice: 'Profile all his Users Profiles were successfully destroyed.'}
 
-    else
-      format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
-      format.json {head :no_content}
+      else
+        format.html {redirect_to user_index_path, notice: 'Reseller and all his Users were successfully destroyed.'}
+        format.json {head :no_content}
+      end
     end
   end
-end
 
-private
-# Use callbacks to share common setup or constraints between actions.
-def set_user
-  @user = User.find(params[:id])
-end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-# Never trust parameters from the scary internet, only allow the white list through.
-def user_params
-  params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :owner_id)
-end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :owner_id)
+  end
 end

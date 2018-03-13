@@ -14,7 +14,7 @@ class Upload < ApplicationRecord
   end
 
   validates :video, attachment_presence: true
-  validates :name, presence: true, uniqueness: true, length: {minimum: 2}
+  validates :name, presence: true, uniqueness: {scope: :user_id}, length: {minimum: 2}
 
   has_attached_file :video, :styles => {
       :medium => {:geometry => '640x480#', :format => 'mp4'}, :thumb => ['300x300#', :jpg]},
@@ -60,7 +60,9 @@ class Upload < ApplicationRecord
   scope :visible_by, ->(current_user) {
     if current_user.role == 'Reseller'
       where(user_id: current_user.subordinates.map(&:id).push(current_user.id))
-    elsif current_user.role == 'User'
+
+      #   check if current user has a role of 'User' and check if he has a valid reseller
+    elsif current_user.role == 'User' && current_user.owner_id != -1
       reseller = User.find_by(id: current_user.owner_id)
       where(user_id: reseller.subordinates.map(&:id).push(reseller.id))
     end
@@ -83,4 +85,5 @@ class Upload < ApplicationRecord
   scope :filter_by_user, ->(filter_user) {
     where(user_id: filter_user)
   }
+
 end
