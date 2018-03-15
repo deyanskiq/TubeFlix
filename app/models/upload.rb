@@ -3,7 +3,7 @@ class Upload < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
 
-  # Unless we do not use delegate option we access name of the upload owner this way: upload.user.name
+  # Unless we do not use delegate option we access name of the upload owner this way: upload.user.name instend of upload.user_name
   # This exposes the user object even if we don't really need it, so we could do the following:
   delegate :name, to: :user, prefix: true
 

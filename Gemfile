@@ -68,4 +68,4 @@ gem 'paperclip-av-transcoder'
 
 gem 'pry-byebug'
 
-gem 'rspec-rails' 
+gem 'rspec-rails', '~> 3.0'
