@@ -3,10 +3,6 @@ require 'spec_helper'
 
 
 describe UploadsController do
-  # expect(response).to be_success
-  # expect(response).to be_error
-  # expect(response).to be_missing
-  # expect(response).to be_redirect
 
   context '(Signed in as Reseller) Success on' do
 

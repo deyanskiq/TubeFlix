@@ -15,7 +15,10 @@ class Ability
       end
 
       can :manage, Comment do |comment|
-        comment.upload.user.owner_id == user.id
+        # when create comment - in the controller#create comment.upload_id is initialized
+        if comment.upload_id != nil
+          comment.upload.user.owner_id == user.id
+        end
       end
 
 

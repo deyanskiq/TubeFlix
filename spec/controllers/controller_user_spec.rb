@@ -3,11 +3,6 @@ require 'spec_helper'
 
 
 describe UserController do
-# expect(response).to be_success
-# expect(response).to be_error
-# expect(response).to be_missing
-# expect(response).to be_redirect
-#
   context 'Authenticate user' do
     before :each do
       @john = User.create(id: 1, name: 'john', email: 'john@abv.bg', password: '123123', role: 'Reseller')
